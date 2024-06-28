@@ -55,52 +55,11 @@ sessionStorage.setItem("name", "Javier");
 let otherName = sessionStorage.getItem("name");
 console.log(otherName);
 
-// localStorage() (exercise)
-
-const $en = document.querySelector(".en"),
-	$es = document.querySelector(".es"),
-	$modalContainer = document.querySelector(".modal-container");
-
-const setLanguage = () => {
-	$en.addEventListener("click", () => {
-		localStorage.setItem("language", "en");
-		closeModal();
-	});
-
-	$es.addEventListener("click", () => {
-		localStorage.setItem("language", "es");
-		closeModal();
-	});
-};
-
-const closeModal = () => {
-	$modalContainer.style.animation = "dontShowModal 1s forwards";
-	setTimeout(() => {
-		$modalContainer.style.display = "none";
-	}, 1000);
-};
-
-const language = localStorage.getItem("language");
-
-if (language === null) {
-	setLanguage();
-} else {
-	console.log(`Language: ${language}`);
-	$modalContainer.style.display = "none";
-}
-
-if (language === "en") {
-	alert("This page is in English");
-}
-
-if (language === "es") {
-	alert("Esta página esta en español");
-}
-
 // ****************************************************************************************************
 
 // Drag and Drop (dragstart, drag & dragend events)
-// *********************
+// ********************************************************
+
 const $circle = document.querySelector(".circle");
 const $container = document.querySelector(".container");
 
@@ -136,3 +95,41 @@ $container.addEventListener("drop", (e) => {
 $container.addEventListener("dragleave", () => {
 	console.log("dragleave");
 });
+
+// **************************************************************************************************
+
+// Geolocation API
+// *********************************
+
+const geolocat = navigator.geolocation;
+console.log(geolocat);
+
+// getCurrentPosition
+const position = (pos) => {
+	console.log(pos);
+	console.log(pos.coords);
+	console.log(pos.coords.latitude);
+	console.log(pos.coords.longitude);
+};
+
+const err = () => {
+	console.log(e);
+};
+
+const options = {
+	maximumAge: 0, // the time of actualisation
+	timeOut: 3000, // the time the app will be waiting to show the information
+	enableHighAccuracy: true, // active the high presition to find the location
+};
+
+geolocat.getCurrentPosition(position, err, options);
+
+// watchPosition()
+const watchPosition = navigator.geolocation.watchPosition((pos) => {
+	const { latitude, longitude } = pos.coords;
+
+	console.log(`Watching latitude ${latitude} and longitude ${longitude}`);
+	console.log(`Wath Position: ${watchPosition}`);
+});
+
+watchPosition();
