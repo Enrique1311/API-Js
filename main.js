@@ -21,27 +21,118 @@ console.log("Minutes: " + newDate.getMinutes());
 
 console.log("Seconds: " + newDate.getSeconds());
 
-// Clock (exercise)
-const addZero = (num) => {
-	if (num.toString().length < 2) {
-		return "0".concat(num);
-	}
-	return num;
+//**************************************************************************************************************
+
+// localStorage()
+//**************************
+
+// setItem() - Asign the value of the localStorage
+localStorage.setItem("name", "Enrique");
+console.log(localStorage);
+
+// getItem() - Get the value of the localStorage
+console.log(localStorage.getItem("name"));
+
+let myName = localStorage.getItem("name");
+console.log(`Variable which contain name of the localStorage: ${myName}`);
+
+// removeItem() - Remove an item of the localStorage
+setTimeout(() => {
+	localStorage.removeItem("name");
+}, 2000);
+
+// clear() - Clear all the values of the localStorage
+// setTimeout(() => {
+// 	localStorage.clear();
+// }, 2000);
+
+//**************************************************************************************************************
+
+// sessionStorage()
+//**************************
+sessionStorage.setItem("name", "Javier");
+
+let otherName = sessionStorage.getItem("name");
+console.log(otherName);
+
+// localStorage() (exercise)
+
+const $en = document.querySelector(".en"),
+	$es = document.querySelector(".es"),
+	$modalContainer = document.querySelector(".modal-container");
+
+const setLanguage = () => {
+	$en.addEventListener("click", () => {
+		localStorage.setItem("language", "en");
+		closeModal();
+	});
+
+	$es.addEventListener("click", () => {
+		localStorage.setItem("language", "es");
+		closeModal();
+	});
 };
 
-const getHour = () => {
-	const time = new Date();
-	let hour = addZero(time.getHours());
-	let min = addZero(time.getMinutes());
-	let sec = addZero(time.getSeconds());
-
-	document.querySelector(".hour").textContent = hour;
-	document.querySelector(".min").textContent = min;
-	document.querySelector(".sec").textContent = sec;
+const closeModal = () => {
+	$modalContainer.style.animation = "dontShowModal 1s forwards";
+	setTimeout(() => {
+		$modalContainer.style.display = "none";
+	}, 1000);
 };
 
-getHour();
+const language = localStorage.getItem("language");
 
-setInterval(() => {
-	getHour();
-}, 1000);
+if (language === null) {
+	setLanguage();
+} else {
+	console.log(`Language: ${language}`);
+	$modalContainer.style.display = "none";
+}
+
+if (language === "en") {
+	alert("This page is in English");
+}
+
+if (language === "es") {
+	alert("Esta página esta en español");
+}
+
+// ****************************************************************************************************
+
+// Drag and Drop (dragstart, drag & dragend events)
+// *********************
+const $circle = document.querySelector(".circle");
+const $container = document.querySelector(".container");
+
+$circle.addEventListener("dragstart", (e) => {
+	console.log("dragstart");
+	console.log(e.dataTransfer);
+	e.dataTransfer.setData("myClass", e.target.className); // It is convenient to work with id
+});
+
+// $circle.addEventListener("drag", () => {
+// 	console.log("drag");
+// });
+
+// $circle.addEventListener("dragend", () => {
+// 	console.log("dragend");
+// });
+
+// (dragenter, dragover, drop & dragleave)
+$container.addEventListener("dragenter", () => {
+	console.log("dragenter");
+});
+
+$container.addEventListener("dragover", () => {
+	e.preventDefault(); // prevent default allows the drop event to be actived on the element
+	console.log("dragover");
+});
+
+$container.addEventListener("drop", (e) => {
+	console.log("drop");
+	console.log(e.dataTransfer.getData("myClass"));
+});
+
+$container.addEventListener("dragleave", () => {
+	console.log("dragleave");
+});

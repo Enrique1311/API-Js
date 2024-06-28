@@ -1,0 +1,42 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: sans-serif;
+}
+
+.objects {
+	border: 1px solid black;
+	margin: 1rem;
+	border-radius: 5px;
+	padding: 1rem;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	gap: 1rem;
+}
+
+.objects div {
+	width: 100px;
+	height: 100px;
+	border-radius: 5px;
+}
+
+.object1 {
+	background-image: url(./assets/img-1.jpg);
+}
+
+.object2 {
+	background-image: url(./assets/img-2.jpg);
+}
+
+.object3 {
+	background-image: url(./assets/img-3.jpg);
+}
+
+.zone {
+	background-color: rgb(160, 158, 158);
+	height: 15rem;
+	margin: 1rem;
+	border-radius: 5px;
+}
