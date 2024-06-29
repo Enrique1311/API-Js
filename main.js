@@ -144,3 +144,78 @@ console.log(history.length);
 // history.go(1) // to go to one next page
 // history.go(-1) // to go to one previous page
 console.log(location.href);
+
+// **********************************************************************************************
+
+// FileReader API
+// ********************
+
+// readAsText() ************************************
+// const $file = document.querySelector("#file");
+
+// const readFile = (myFile) => {
+// 	const reader = new FileReader();
+// 	console.log(reader);
+// 	reader.readAsText(myFile);
+// 	reader.addEventListener("load", (e) => {
+// 		console.log(e);
+// 		console.log(e.target.result);
+// 		let data = JSON.parse(reader.result);
+// 		console.log(data);
+// 	});
+// };
+
+// $file.addEventListener("change", (e) => {
+// 	console.log($file.files[0]);
+// 	readFile($file.files[0]);
+// });
+
+//FileReader (Multiple files)
+const $multipleFiles = document.querySelector("#multiple-files");
+
+$multipleFiles.addEventListener("change", (e) => {
+	readFiles($multipleFiles.files);
+});
+
+console.log($multipleFiles);
+
+// const readFiles = (files) => {
+// 	for (let i = 0; i < files.length; i++) {
+// 		console.log(files[i]);
+// 		const reader = new FileReader();
+// 		reader.readAsText(files[i]);
+// 		reader.addEventListener("load", (e) => {
+// 			console.log(JSON.parse(e.target.result));
+// 		});
+// 	}
+// };
+
+const readFiles = (files) => {
+	for (f of files) {
+		console.log(f);
+		const reader = new FileReader();
+		reader.readAsText(f);
+		reader.addEventListener("load", (e) => {
+			console.log(JSON.parse(e.target.result));
+		});
+	}
+};
+
+// readAsDataURL() *******************************************
+const $readImages = document.querySelector(".read-images");
+const $imgFiles = document.querySelector("#img-files");
+
+$imgFiles.addEventListener("change", (e) => {
+	readURLs($imgFiles.files);
+});
+
+const readURLs = (files) => {
+	for (f of files) {
+		const reader = new FileReader();
+		reader.readAsDataURL(f);
+		reader.addEventListener("load", (e) => {
+			let newImg = `<img src="${e.target.result}">`;
+			$readImages.innerHTML += newImg;
+		});
+	}
+};
