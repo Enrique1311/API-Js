@@ -219,3 +219,77 @@ const readURLs = (files) => {
 		});
 	}
 };
+
+// IndexedDB API *******************************************************************************
+const IDBRequest = indexedDB.open("myDB", 1); // Opens the DB (if it doesn't exist, creates one)
+console.log(IDBRequest);
+
+IDBRequest.addEventListener("upgradeneeded", () => {
+	console.log("myBb database was successfully created");
+	const db = IDBRequest.result;
+	db.createObjectStore("names", {
+		autoIncrement: true,
+	});
+});
+
+IDBRequest.addEventListener("success", () => {
+	console.log("It´s OK!");
+});
+
+IDBRequest.addEventListener("error", () => {
+	console.log("Something went wrong!");
+});
+
+const addObject = (obj) => {
+	const IDBData = getIDBData();
+	// IDBData[0] is objectStore
+	IDBData[0].add(obj); // Add the object
+	// IDBData[1] is myTransaction
+	IDBData[1].addEventListener("complete", () => {
+		console.log("obj added successfully!");
+	});
+};
+// addObject({ name: "Enrique"}) from the console
+
+const readObjects = () => {
+	const IDBData = getIDBData();
+	const cursor = IDBData[0].openCursor();
+	cursor.addEventListener("success", () => {
+		if (cursor.result) {
+			console.log(cursor.result.value);
+			cursor.result.continue();
+		} else {
+			// when the cursor has finished reading the data, it becomes to null and execute the sentence in else
+			console.log("All data was successfully readed from myDB");
+		}
+	});
+};
+// readObjects() from the console
+
+const modifyObject = (key, obj) => {
+	const IDBData = getIDBData();
+	// IDBData[0] is objectStore
+	IDBData[0].put(obj, key); // Modify the object (if it doesn't exist, creates one)
+	// IDBData[1] is myTransaction
+	IDBData[1].addEventListener("complete", () => {
+		console.log("obj modified correctly!");
+	});
+};
+// modifyObject(3,{ name: "Enrique"}) from the console
+
+const deleteObject = (key) => {
+	const IDBData = getIDBData();
+	IDBData[0].delete(key); // IDBData[0] is objectStore
+	IDBData[1].addEventListener("complete", () => {
+		// IDBData[1] is myTransaction
+		console.log("obj deleted successfully!");
+	});
+};
+// deleteObject(3) from the console
+
+const getIDBData = () => {
+	const db = IDBRequest.result;
+	const myTransaction = db.transaction("names", "readwrite");
+	const objectStore = myTransaction.objectStore("names");
+	return [objectStore, myTransaction];
+};
