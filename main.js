@@ -293,3 +293,44 @@ const getIDBData = () => {
 	const objectStore = myTransaction.objectStore("names");
 	return [objectStore, myTransaction];
 };
+
+// **********************************************************************************************
+
+//  matchMedia() API
+// ********************
+
+const $box = document.querySelector(".box");
+const mql = matchMedia("(max-width: 500px)"); // Verify that the max-width is correct
+console.log(mql);
+
+mql.addEventListener("change", () => {
+	mql.matches
+		? $box.classList.replace("box", "responsive-box")
+		: $box.classList.replace("responsive-box", "box");
+});
+
+// **********************************************************************************************
+
+// IntersectionObserver() API
+// ******************************
+
+const $items = document.querySelectorAll(".item");
+
+const verifyVisibility = (entries) => {
+	for (let entry of entries) {
+		if (entry.isIntersecting) {
+			console.log("You are watching", entry.target.textContent);
+		}
+	}
+};
+
+const options = {
+	// root: $items, // Root element
+	rootMargin: "-100px",
+};
+
+const observer = new IntersectionObserver(verifyVisibility, options);
+
+for (let item of $items) {
+	observer.observe(item);
+}

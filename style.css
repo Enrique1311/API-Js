@@ -1,6 +1,9 @@
+* {
+	font-family: sans-serif;
+}
+
 .drag-drop {
 	background-color: rgb(173, 174, 173);
-
 	text-align: center;
 	padding: 2rem;
 }
@@ -19,4 +22,51 @@
 	height: 5rem;
 	border-radius: 50%;
 	margin: 0 auto;
+}
+
+.box {
+	width: 300px;
+	height: 300px;
+	display: flex;
+	background-color: aqua;
+	margin: 2rem auto;
+	font-size: 2rem;
+}
+
+span {
+	margin: auto;
+}
+
+.responsive-box {
+	width: 300px;
+	height: 300px;
+	display: flex;
+	background-color: #2d2d6e;
+	margin: 2rem auto;
+	font-size: 2rem;
+	color: white;
+}
+
+.item {
+	height: 300px;
+	margin: 1rem;
+	background-color: #00b3ff;
+	padding: 2rem;
+	font-size: 2rem;
+}
+
+p {
+	text-align: center;
+}
+
+.item:nth-child(2) {
+	background-color: hsl(153, 17%, 53%);
+}
+
+.item:nth-child(3) {
+	background-color: rgb(154, 114, 114);
+}
+
+.item:nth-child(4) {
+	background-color: #afaeae;
 }
