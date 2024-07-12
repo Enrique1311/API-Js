@@ -15,8 +15,24 @@
 	padding: 1rem;
 }
 
+h4 {
+	padding: 1rem;
+	text-align: center;
+}
+
 .publication {
 	padding: 1rem;
+	opacity: 0;
+	animation: showPub 1s forwards 0.5s;
+}
+
+@keyframes showPub {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 
 .publication h3 {
@@ -29,7 +45,6 @@
 .publication p {
 	padding: 1rem;
 	border-left: 2px solid var(--primary-color);
-	/* border-bottom: 2px solid var(--primary-color); */
 }
 
 .add-comment {

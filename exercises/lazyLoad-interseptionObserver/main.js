@@ -1,5 +1,6 @@
 const d = document;
 const $publicationsContainer = d.querySelector(".publications-container");
+let counter = 0;
 
 const createPublicationsCode = (name, content) => {
 	const $divPublication = d.createElement("div"),
@@ -29,3 +30,40 @@ const createPublicationsCode = (name, content) => {
 
 	return $divPublication;
 };
+
+const loadMorePublications = (entry) => {
+	if (entry[0].isIntersecting) {
+		loadPublications(4);
+	}
+};
+
+const observer = new IntersectionObserver(loadMorePublications);
+
+const loadPublications = async (num) => {
+	const $frament = d.createDocumentFragment();
+	const req = await fetch("assets/data.txt");
+	const content = await req.json();
+	const data = content.content;
+
+	for (let i = 0; i < num; i++) {
+		if (data[counter] != undefined) {
+			const newPublic = createPublicationsCode(
+				data[counter].name,
+				data[counter].comment
+			);
+			$frament.appendChild(newPublic);
+			counter++;
+
+			if (i == num - 1) observer.observe(newPublic);
+		} else {
+			let $noMorePub = d.createElement("h4");
+			$noMorePub.textContent = "No more Publications...";
+			$frament.appendChild($noMorePub);
+			$publicationsContainer.appendChild($frament);
+			break;
+		}
+	}
+
+	$publicationsContainer.appendChild($frament);
+};
+loadPublications(2);
