@@ -46,7 +46,7 @@ const loadPublications = async (num) => {
 	const data = content.content;
 
 	for (let i = 0; i < num; i++) {
-		if (data[counter] != undefined) {
+		if (data[counter] !== undefined) {
 			const newPublic = createPublicationsCode(
 				data[counter].name,
 				data[counter].comment
@@ -56,11 +56,14 @@ const loadPublications = async (num) => {
 
 			if (i == num - 1) observer.observe(newPublic);
 		} else {
-			let $noMorePub = d.createElement("h4");
-			$noMorePub.textContent = "No more Publications...";
-			$frament.appendChild($noMorePub);
-			$publicationsContainer.appendChild($frament);
-			break;
+			if ($publicationsContainer.lastElementChild.id !== "no-more-public") {
+				let $noMorePub = d.createElement("h4");
+				$noMorePub.textContent = "No more Publications...";
+				$noMorePub.id = "no-more-public";
+				$frament.appendChild($noMorePub);
+				$publicationsContainer.appendChild($frament);
+				break;
+			}
 		}
 	}
 
