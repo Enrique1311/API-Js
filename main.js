@@ -334,3 +334,35 @@ const observer = new IntersectionObserver(verifyVisibility, options);
 for (let item of $items) {
 	observer.observe(item);
 }
+
+// **********************************************************************************************
+
+// visibilitychange API
+// ******************************
+
+document.addEventListener("visibilitychange", (e) => {
+	if (e.target.visibilityState === "visible") {
+	} else {
+		alert("Thanks for comming this page!");
+	}
+});
+
+// **********************************************************************************************
+
+// Notification API
+// ******************************
+
+console.log(Notification);
+
+if (!(Notification in window)) {
+	console.log("Notification API not available for this browser!");
+} else {
+	console.log("Notification API is available for this browser!");
+}
+
+// request permission to the user
+Notification.requestPermission(() => {
+	if (Notification.permission === "granted") {
+		new Notification("Permission granted");
+	}
+});
